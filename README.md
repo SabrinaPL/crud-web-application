@@ -10,11 +10,11 @@ To announce that you have completed the assignment, you must make a merge reques
 
 The web application must be a Node.js application that uses Express as the application framework and Mongoose as the ODM to create a web application that can store data persistently. You must follow the course's coding standard. You must split your source code into several modules. Of course, you need to document and comment on the source code. (#5, #1, #4)
 
-After cloning the repository with the application's source code and running `npm install`, it must be easy to lint the source code and run the application. Therefore, add the script start and lint to the "scripts" field in the package.json file. (#3)
+After cloning the repository with the application's source code and running the `npm install` command, it must be easy to lint the source code and run the application. Therefore, add the script start and lint to the "scripts" field in the package.json file. (#3)
 
 A MongoDB database must store the web application's data. You are free to use [MongoDB as a Docker container](https://hub.docker.com/_/mongo) or a cloud-hosted MongoDB, for instance, [MongoDB Atlas](https://www.mongodb.com/cloud/atlas). (#7)
 
-Users must be able to register and login into the application after entering a username and a password. The username must be unique to the application, and the password must not be recoverable. A logged-in user must be able to log out of the application. (#13, #14, #15)
+Users must be able to register and log into the application after entering a username and a password. The username must be unique to the application, and the password must not be recoverable. A logged-in user must be able to log out of the application. (#13, #14, #15)
 
 For the application to differentiate between an anonymous and authenticated user, there must be support for some basic authentication and authorization. You may only use session storage on the server side, using the [express-session](https://www.npmjs.com/package/express-session) package to implement authentication and authorization. __You must not use any packages, such as Passport, etc., to authenticate or authorize.__ (#16)
 
