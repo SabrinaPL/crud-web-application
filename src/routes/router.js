@@ -1,9 +1,7 @@
 import express from 'express'
-import { HomeController } from '../controllers/HomeController.js'
+import { router as homeRouter } from './homeRouter.js'
 
 export const router = express.Router()
 
-const controller = new HomeController()
-router.get('/', (req, res, next) => controller.index(req, res, next))
-router.post('/', (req, res, next))
-
+// Router object is used as argument.
+router.use('/', homeRouter)

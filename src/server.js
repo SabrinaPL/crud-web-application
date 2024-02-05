@@ -3,7 +3,7 @@ import expressLayouts from 'express-ejs-layouts'
 import logger from 'morgan'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { router } from './routes/router.js'
+import { router } from './routes/homeRouter.js'
 
 // Get the path of the current module's directory.
 const directoryFullName = dirname(fileURLToPath(import.meta.url))
@@ -60,7 +60,7 @@ const server = app.listen(process.env.PORT, () => {
     console.log('Press Ctrl-C to terminate...')
 })
 
-// Egna minnesanteckningar:
+// Minnesanteckningar från föreläsningarna:
 /* Server.js jobbar med filerna som finns i routes, routes med det som finns i controllers, controllers använder sig av det som finns i views */
 
 /* Server.js purpose is to create an instance of an Express application, config it and start it as an Express server */
