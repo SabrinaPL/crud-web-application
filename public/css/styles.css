@@ -1,3 +1,54 @@
-h1 {
-    color: red;
+@font-face {
+    font-family: 'Protest Riot';
+    src: url('../fonts/Protest_Riot/ProtestRiot-Regular.ttf')
 }
+
+h1 {
+    color: #8C271E;
+    font-family: 'Protest Riot', Arial, sans-serif;
+}
+
+body {
+    background-color: #EAEAEA;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+  }
+
+  nav {
+    background-color: #EAEAEA;
+    text-align: right;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 2rem;
+  }
+
+  li {
+    display: inline-block;
+    margin: 0 1rem;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  a:hover {
+    text-decoration: underline red;
+    color: black;
+  }
+
+  /* Code snippet container styling, as suggested by chatGPT */
+  .code-snippet-container {
+    color: white;
+    background-color: black;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem auto;
+    border: transparent;
+    border-radius: 8px;
+    overflow: auto;
+  }
+
+  
