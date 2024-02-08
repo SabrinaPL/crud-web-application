@@ -1,3 +1,9 @@
+/**
+ * @file Defines the homeRouter class.
+ * @module homeRouter
+ * @author Mats Loock
+ */
+
 import express from 'express'
 import { HomeController } from '../controllers/HomeController.js'
 

@@ -19,6 +19,19 @@ body {
     text-align: right;
   }
 
+  .button {
+    display: inline-block;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: 5px;
+  }
+
   ul {
     list-style-type: none;
     padding: 2rem;
@@ -26,23 +39,23 @@ body {
 
   li {
     display: inline-block;
-    margin: 0 1rem;
+    margin: 0 0.5rem;
   }
 
   a {
     text-decoration: none;
-    color: black;
+    color: #00120B;
   }
 
   a:hover {
     text-decoration: underline red;
-    color: black;
+    color: #00120B;
   }
 
   /* Code snippet container styling, as suggested by chatGPT */
   .code-snippet-container {
     color: white;
-    background-color: black;
+    background-color: #00120B;
     max-width: 800px;
     margin: 2rem auto;
     padding: 1rem auto;
