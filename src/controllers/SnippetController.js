@@ -4,7 +4,7 @@
  * @author Mats Loock & Sabrina Prichard-Lybeck <sp223kz@student.lnu.se>
  */
 
-import { SnippetModel } from '../models/snippetModel.js'
+import { SnippetModel } from '../models/SnippetModel.js'
 
 /**
  * Encapsulates a controller.
@@ -18,7 +18,7 @@ export class SnippetController {
    * @param {Function} next - Express next middleware function.
    * @param {string} id - The value of the id for the task to load.
    */
-  async loadTaskDocument (req, res, next, id) {
+  async loadSnippetDocument (req, res, next, id) {
     try {
       // Get the snippet document.
       const snippetDoc = await SnippetModel.findById(id)
@@ -31,7 +31,7 @@ export class SnippetController {
       }
 
       // Provide the snippet document to req.
-      req.doc = taskDoc
+      req.doc = snippetDoc
 
       // Next middleware.
       next()
@@ -48,11 +48,11 @@ export class SnippetController {
    * @param {Function} next - Express next middleware function.
    */
   async index (req, res, next) {
-    console.log('Hello')
     try {
+      console.log('index')
       const viewData = {
-        // tasks: (await SnippetModel.findAll())
-        //  .map(snippetDoc => snippetDoc.toObject())
+        snippets: (await SnippetModel.find())
+        .map(snippetDoc => snippetDoc.toObject())
       }
 
       res.render('snippets/index', { viewData })
@@ -87,6 +87,7 @@ export class SnippetController {
       })
 
       req.session.flash = { type: 'success', text: 'The snippet was created successfully.' }
+      // The '.' will redirect to the current route.
       res.redirect('.')
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }

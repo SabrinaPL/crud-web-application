@@ -8,4 +8,34 @@
     </ul>
 </nav>
 
-<h1>Hello Snippets Index</h1>
+<h1>My Snippets</h1>
+
+<div class="my-snippets-container">
+    <% if (viewData?.snippets?.length) { %>
+        <% for (const snippet of viewData.snippets) { %>
+            <div class="my-snippet">
+                <h2>
+                    <%= snippet.title %>
+                </h2>
+                <div class="code-snippet-container">
+                    <pre>
+                    <code>
+                    <%= snippet.description %>
+                    </code>
+                </pre>
+                </div>
+                <a href="./snippets/<%= snippet.id %>/update">Update</a>
+                <a href="./snippets/<%= snippet.id %>/delete">Delete</a>
+            </div>
+
+
+            <div class="update-delete-text">
+                <a href="./snippets/<%= snippet.id %>/update">Update</a>
+                <a href="./snippets/<%= snippet.id %>/delete">Delete</a>
+            </div>
+
+            <% } %>
+                <% } else { %>
+                    <p class="text-center text-danger">There are no snippets to display</p>
+                    <% } %>
+</div>
