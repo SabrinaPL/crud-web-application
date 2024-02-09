@@ -9,6 +9,10 @@
 </nav>
 
 <h1>My Snippets</h1>
+<p>
+    Here you can view, update and delete your current snippets
+</p>
+<p id="newest">Newest:</p>
 
 <div class="my-snippets-container">
     <% if (viewData?.snippets?.length) { %>
@@ -24,18 +28,16 @@
                     </code>
                 </pre>
                 </div>
-                <a href="./snippets/<%= snippet.id %>/update">Update</a>
-                <a href="./snippets/<%= snippet.id %>/delete">Delete</a>
             </div>
-
-
-            <div class="update-delete-text">
-                <a href="./snippets/<%= snippet.id %>/update">Update</a>
-                <a href="./snippets/<%= snippet.id %>/delete">Delete</a>
-            </div>
-
-            <% } %>
-                <% } else { %>
-                    <p class="text-center text-danger">There are no snippets to display</p>
-                    <% } %>
 </div>
+
+<div class="update-delete-text">
+    <a href="./snippets/<%= snippet.id %>/update">Update</a>
+    <a href="./snippets/<%= snippet.id %>/delete">Delete</a>
+</div>
+
+<% } %>
+    <% } else { %>
+        <p class="text-center text-danger">There are no snippets to display</p>
+        <% } %>
+            </div>

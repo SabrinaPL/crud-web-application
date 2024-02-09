@@ -68,9 +68,20 @@ body {
 
   .my-snippets-container {
     display: flex; 
-    flex-direction: row; 
-    align-items: center;
+    flex-direction: column-reverse; 
+    flex-wrap: wrap; 
+    justify-content: space-around;
+    text-align: left;
     overflow: auto;
+    margin: 0;
+  }
+
+  #newest {
+    margin-left: 16rem;
+  }
+
+  .update-delete-text {
+    text-align: center; 
   }
 
   #snippet-code-text-box {
