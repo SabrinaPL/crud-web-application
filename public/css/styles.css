@@ -68,16 +68,11 @@ body {
 
   .my-snippets-container {
     display: flex; 
-    flex-direction: column-reverse; 
+    flex-direction: row-reverse;  
     flex-wrap: wrap; 
-    justify-content: space-around;
+    justify-content: space-around; 
     text-align: left;
-    overflow: auto;
-    margin: 0;
-  }
-
-  #newest {
-    margin-left: 16rem;
+    overflow: auto; 
   }
 
   .update-delete-text {

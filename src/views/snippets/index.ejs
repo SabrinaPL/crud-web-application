@@ -12,15 +12,11 @@
 <p>
     Here you can view, update and delete your current snippets
 </p>
-<p id="newest">Newest:</p>
 
 <div class="my-snippets-container">
     <% if (viewData?.snippets?.length) { %>
         <% for (const snippet of viewData.snippets) { %>
             <div class="my-snippet">
-                <h2>
-                    <%= snippet.title %>
-                </h2>
                 <div class="code-snippet-container">
                     <pre>
                     <code>
@@ -28,16 +24,14 @@
                     </code>
                 </pre>
                 </div>
+                <div class="update-delete-text">
+                    <a href="./snippets/<%= snippet.id %>/update">Update</a>
+                    <a href="./snippets/<%= snippet.id %>/delete">Delete</a>
+                </div>
             </div>
-</div>
 
-<div class="update-delete-text">
-    <a href="./snippets/<%= snippet.id %>/update">Update</a>
-    <a href="./snippets/<%= snippet.id %>/delete">Delete</a>
+            <% } %>
+                <% } else { %>
+                    <p class="text-center text-danger">There are no snippets to display</p>
+                    <% } %>
 </div>
-
-<% } %>
-    <% } else { %>
-        <p class="text-center text-danger">There are no snippets to display</p>
-        <% } %>
-            </div>
