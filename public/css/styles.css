@@ -59,8 +59,8 @@ body {
     color: greenyellow;
     background-color: #00120B;
     max-width: 800px;
-    margin: 2rem auto;
-    padding: 1rem auto;
+    margin: 0.5rem;
+    padding: 1rem;
     border: transparent;
     border-radius: 8px;
     overflow: auto;
@@ -70,8 +70,7 @@ body {
     display: flex; 
     flex-direction: row-reverse;  
     flex-wrap: wrap; 
-    justify-content: space-around; 
-    text-align: left;
+    justify-content: space-evenly; 
     overflow: auto; 
   }
 
@@ -79,15 +78,19 @@ body {
     text-align: center; 
   }
 
-  #snippet-code-text-box {
+  .snippet-code-text-box {
     background-color: black; 
     color: greenyellow;
     border: 0.1rem solid black;
     border-radius: 0.5rem;
-    padding: 1rem;
+    padding: 1rem; 
   }
 
-  .create-btn {
+  pre {
+    padding: 1.2rem;
+  }
+
+  .crud-btn {
     font-size: 1.15rem;
     border: 0.1rem solid #ccc;
     border-radius: 0.5rem;
@@ -95,6 +98,18 @@ body {
     padding: 0.5rem 1rem;
     color: #333;
     margin-top: 1rem;
+  }
+
+  .delete-warning-text {
+    margin-top: 1rem; 
+  }
+
+  .delete-btn {
+    background-color: red; 
+    color: white;
+    border: 0.1rem solid red;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
   }
 
   footer {

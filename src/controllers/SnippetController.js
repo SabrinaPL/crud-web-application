@@ -49,7 +49,6 @@ export class SnippetController {
    */
   async index (req, res, next) {
     try {
-      console.log('index')
       const viewData = {
         snippets: (await SnippetModel.find())
         .map(snippetDoc => snippetDoc.toObject())

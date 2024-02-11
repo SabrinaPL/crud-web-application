@@ -21,7 +21,7 @@ try {
   // Set the base URL to use for all relative URLs in a document.
   const baseURL = process.env.BASE_URL || '/'
 
-  // Set up a morgan logger using the dev format for log entries.
+  // Set up a morgan logger using the dev format for log entries. Record system events. 
   app.use(logger('dev'))
 
   // View engine setup.
