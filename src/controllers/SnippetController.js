@@ -78,11 +78,10 @@ export class SnippetController {
    */
   async createPost (req, res) {
     try {
-      const { description, done } = req.body
+      const { description } = req.body
 
       await SnippetModel.create({
-        description,
-        done: done === 'on'
+        description
       })
 
       req.session.flash = { type: 'success', text: 'The snippet was created successfully.' }
@@ -118,7 +117,6 @@ export class SnippetController {
   async updatePost (req, res) {
     try {
       if ('description' in req.body) req.doc.description = req.body.description
-      if ('done' in req.body) req.doc.done = req.body.done === 'on'
 
       if (req.doc.isModified()) {
         await req.doc.save()
