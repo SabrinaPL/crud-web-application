@@ -3,13 +3,13 @@
         <li><a href="/">Home</a></li>
         <li><a href="./snippets">My Snippets</a></li>
         <li><a href="./snippets/create">Create Snippet</a></li>
-        <li><a href="./" class="button">Register</a></li>
-        <li><a href="./users" class="button">Login</a></li>
+        <li><a href="./users/register" class="button">Register</a></li>
+        <li><a href="./" class="button">Login</a></li>
     </ul>
 </nav>
 
-<h1>Login</h1>
-<h2>Login with your username and password to modify current and create new snippets</h2>
+<h1>User Login</h1>
+<p>Login with your username and password to modify current and create new snippets</p>
 
 <form class="register-user" method="post" action="./">
     <label for="username">
@@ -20,4 +20,5 @@
         Password:
     </label><br>
     <input type="text" id="password" name="password" required><br><br>
+    <button type="submit" class="crud-btn">Login</button>
 </form>

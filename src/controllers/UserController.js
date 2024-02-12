@@ -40,7 +40,7 @@ export class UserController {
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
    */
-    async createRegistration (req, res, next) {
+    async createRegistration (req, res) {
       // Check if there is already a user in the database with that username, before new user can be created.
 
       const username = req.body.username
@@ -60,6 +60,21 @@ export class UserController {
         return res.redirect('./registration')
       }
 
-      // Next step is to hash and salt the password, before storing the new user in the database.
+      try {
+      // Store user in the database.
+      await UserModel.create({
+        username,
+        password
+      })
+
+      req.session.flash = { type: 'success', text: 'User registration was successfully completed.' }
+
+      res.redirect('.')
+    } catch (error) {
+      req.session.flash = { type: 'danger', text: error.message }
+      res.redirect('./registration')
+    }
+
+      // Connect user to snippets that the user has created. Only the user (if logged in) will be authorized to update or delete their own snippets.
     }
 }
