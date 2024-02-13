@@ -32,7 +32,7 @@ export class HomeController {
         const viewData = {
             name: req.body.name,
             // Date formatting (day).
-            dayName: format(new Date(), 'iiii')
+            // dayName: format(new Date(), 'iiii')
         }
 
         // Here we need to specify which view shall be rendered (and potential data to be included).

@@ -21,6 +21,8 @@ export class UserController {
      */
     index (req, res, next) {
       res.render('users/login')
+      
+      next()
     }
 
   /**
@@ -49,7 +51,7 @@ export class UserController {
       // Check if the username and password is in the request body.
       if (!username || !password) {
         req.session.flash = { type: 'danger', text: 'Please enter a valid username and password.' }
-        return res.redirect('./registration')
+        return res.redirect('./register')
       } 
 
       // Check if the username already exists against the stored usernames in the database.
@@ -57,7 +59,7 @@ export class UserController {
 
       if (userInDatabase) {
         req.session.flash = { type: 'danger', text: 'Please enter a different username.'}
-        return res.redirect('./registration')
+        return res.redirect('./register')
       }
 
       try {
@@ -69,12 +71,53 @@ export class UserController {
 
       req.session.flash = { type: 'success', text: 'User registration was successfully completed.' }
 
-      res.redirect('.')
+      res.redirect('/')
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
-      res.redirect('./registration')
+      res.redirect('./register')
+    }
     }
 
       // Connect user to snippets that the user has created. Only the user (if logged in) will be authorized to update or delete their own snippets.
-    }
+
+  /**
+   * Returns a HTML form for logging in.
+   *
+   * @param {object} req - Express request object.
+   * @param {object} res - Express response object.
+   */
+      async login (req, res) {
+        res.render('users/login')
+      }
+
+      /**
+       * Login the user.
+       * @param {object} req - Express request object.
+       * @param {object} res - Express response object.
+       */
+      async createLogin (req, res) {
+        const username = req.body.username
+        const password = req.body.password
+  
+        try { 
+          // Check if the user already exists against the stored usernames in the database.
+          const userInDatabase = await UserModel.findOne({ username: username })
+  
+          if (userInDatabase) {
+              // I need to check the inputted password against the hashed and salted password in the database.
+              const passwordValid = await bcryptjs.compare(password, userInDatabase.password)
+
+              if (passwordValid) {
+              req.session.flash = { type: 'success', text: 'Login was successful!' }
+              return res.redirect('/')
+              }
+          } else {
+              req.session.flash = { type: 'danger', text: 'Invalid username or password.' }
+              return res.redirect('./login')
+          }
+      } catch (error) {
+          req.session.flash = { type: 'danger', text: 'An error occurred during login.' }
+          return res.redirect('./login')
+      }
+  }
 }

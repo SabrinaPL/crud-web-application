@@ -23,9 +23,10 @@ const schema = new mongoose.Schema({
         trim: true,
         minLength: [10, 'The password must be of minimum length 10 characters.'],
         required: true,
-    },
-        // timeStamps: true,
-        // versionKey: false
+    }
+    }, {
+        timeStamps: true,
+        versionKey: false
 })
 
 schema.add(BASE_SCHEMA)

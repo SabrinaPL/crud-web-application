@@ -18,5 +18,5 @@ router.get('/', (req, res) => controller.index(req, res, next))
 router.get('/register', (req, res) => controller.registration(req, res))
 router.post('/register', (req, res) => controller.createRegistration(req, res))
 
-router.get('/login', (req, res) => controller.index(req, res))
+router.get('/login', (req, res) => controller.login(req, res))
 router.post('/login', (req, res) => controller.createLogin(req, res))
