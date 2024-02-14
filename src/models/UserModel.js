@@ -9,7 +9,7 @@ import mongoose from 'mongoose'
 import { BASE_SCHEMA } from './baseSchema.js'
 import bcryptjs from 'bcryptjs'
 
-const schema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
@@ -25,18 +25,28 @@ const schema = new mongoose.Schema({
         required: true,
     }
     }, {
-        timeStamps: true,
+        timestamps: true,
         versionKey: false
 })
 
-schema.add(BASE_SCHEMA)
+userSchema.add(BASE_SCHEMA)
 
 // Pre hook to hash and salt the password before saving it to the database.
-schema.pre('save', async function () {
+userSchema.pre('save', async function () {
     this.password = await bcryptjs.hash(this.password, 10)
 })
 
-// Encrypt?
+// Method to authenticate a user.
+userSchema.statics.authenticate = async function (username, password) {
+    const user = await this.findOne({ username: username })
+0
+if (!user || !(await bcryptjs.compare(password, user.password))) {
+    throw new Error('Invalid login attempt.')
+}
+    // If the user is found and the password is correct, return the user.
+    return user
+}
+
 
 // Create a model using the schema.
-export const UserModel = mongoose.model('User', schema)
+export const UserModel = mongoose.model('User', userSchema)

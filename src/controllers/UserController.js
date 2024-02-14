@@ -5,6 +5,7 @@
  */
 
 // I want this controller to handle the logic for user registration and login.
+import e from 'express'
 import { UserModel } from '../models/UserModel.js'
 
 /**
@@ -71,7 +72,7 @@ export class UserController {
 
       req.session.flash = { type: 'success', text: 'User registration was successfully completed.' }
 
-      res.redirect('/')
+      res.redirect('./login')
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
       res.redirect('./register')
@@ -101,23 +102,15 @@ export class UserController {
   
         try { 
           // Check if the user already exists against the stored usernames in the database.
-          const userInDatabase = await UserModel.findOne({ username: username })
-  
-          if (userInDatabase) {
-              // I need to check the inputted password against the hashed and salted password in the database.
-              const passwordValid = await bcryptjs.compare(password, userInDatabase.password)
-
-              if (passwordValid) {
-              req.session.flash = { type: 'success', text: 'Login was successful!' }
-              return res.redirect('/')
-              }
-          } else {
-              req.session.flash = { type: 'danger', text: 'Invalid username or password.' }
-              return res.redirect('./login')
+          const userInDatabase = await UserModel.authenticate(username, password)
+          req.session.regenerate(() => {
+            req.session.flash = { type: 'success', text: 'You are now logged in.' }
+            req.session.user = userInDatabase
+            res.redirect('/')
+          })
+          } catch (error) {
+            req.session.flash = { type: 'danger', text: error.message }
+            return res.redirect('./login')
           }
-      } catch (error) {
-          req.session.flash = { type: 'danger', text: 'An error occurred during login.' }
-          return res.redirect('./login')
-      }
-  }
+        }
 }
