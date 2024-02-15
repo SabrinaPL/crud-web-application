@@ -10,43 +10,51 @@ import { BASE_SCHEMA } from './baseSchema.js'
 import bcryptjs from 'bcryptjs'
 
 const userSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true,
-        minlength: 1
-    },
-    password: {
-        type: String,
-        required: true,
-        trim: true,
-        minLength: [10, 'The password must be of minimum length 10 characters.'],
-        required: true,
-    }
-    }, {
-        timestamps: true,
-        versionKey: false
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    minlength: [3, 'The username must be of minimum length 3 characters.'],
+    maxLength: [256, 'The username must be of maximum length 256 characters.']
+  },
+  password: {
+    type: String,
+    required: true,
+    trim: true,
+    minLength: [10, 'The password must be of minimum length 10 characters.'],
+    maxLength: [256, 'The password must be of maximum length 256 characters.']
+  }
+}, {
+  timestamps: true,
+  versionKey: false
 })
 
 userSchema.add(BASE_SCHEMA)
 
-// Pre hook to hash and salt the password before saving it to the database.
+// Pre hook to hash and salt the password before saving it to the database. Added code to check if the password is modified, as recommended by Mats (handledning 15/2-2024).
 userSchema.pre('save', async function () {
+  if (this.isModified('password')) {
     this.password = await bcryptjs.hash(this.password, 10)
+  }
 })
 
-// Method to authenticate a user.
+// Method to authenticate a user (from the "access control" lecture).
+/**
+ * 
+ * @param {*} username 
+ * @param {*} password 
+ * @returns 
+ */
 userSchema.statics.authenticate = async function (username, password) {
-    const user = await this.findOne({ username: username })
-0
-if (!user || !(await bcryptjs.compare(password, user.password))) {
-    throw new Error('Invalid login attempt.')
-}
-    // If the user is found and the password is correct, return the user.
-    return user
-}
+  const user = await this.findOne({ username })
 
+  if (!user || !(await bcryptjs.compare(password, user.password))) {
+    throw new Error('Invalid login attempt.')
+  }
+  // If the user is found and the password is correct, return the user.
+  return user
+}
 
 // Create a model using the schema.
 export const UserModel = mongoose.model('User', userSchema)

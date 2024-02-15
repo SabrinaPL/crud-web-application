@@ -2,6 +2,7 @@ import express from 'express'
 import expressLayouts from 'express-ejs-layouts'
 import session from 'express-session'
 import logger from 'morgan'
+import helmet from 'helmet'
 import { connectToDatabase } from './config/mongoose.js'
 import { sessionOptions } from './config/sessionOptions.js'
 import { dirname, join } from 'node:path'
@@ -15,13 +16,16 @@ try {
   // Creates an Express application.
   const app = express()
 
+  // Set various HTTP headers to help protect the application from well-known web vulnerabilities.
+  app.use(helmet())
+
   // Get the directory name of this module's path.
   const directoryFullName = dirname(fileURLToPath(import.meta.url))
 
   // Set the base URL to use for all relative URLs in a document.
   const baseURL = process.env.BASE_URL || '/'
 
-  // Set up a morgan logger using the dev format for log entries. Record system events. 
+  // Set up a morgan logger using the dev format for log entries. Record system events.
   app.use(logger('dev'))
 
   // View engine setup.
@@ -111,8 +115,3 @@ try {
 /* Middleware funcs have access to req, res-objects and next middleware func in the req-res cycle */
 
 /* The above code will run once, at the start of the application */
-
-
-
-  
-

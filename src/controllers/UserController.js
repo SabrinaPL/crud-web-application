@@ -5,26 +5,25 @@
  */
 
 // I want this controller to handle the logic for user registration and login.
-import e from 'express'
 import { UserModel } from '../models/UserModel.js'
 
 /**
  * Encapsulates a controller.
  */
 export class UserController {
-    /**
-     * Renders a view and sends the rendered HTML string as an HTTP response.
-     * index GET.
-     *
-     * @param {object} req - Express request object.
-     * @param {object} res - Express response object.
-     * @param {Function} next - Express next middleware function.
-     */
-    index (req, res, next) {
-      res.render('users/login')
-      
-      next()
-    }
+  /**
+   * Renders a view and sends the rendered HTML string as an HTTP response.
+   * index GET.
+   *
+   * @param {object} req - Express request object.
+   * @param {object} res - Express response object.
+   * @param {Function} next - Express next middleware function.
+   */
+  index (req, res, next) {
+    res.render('users/login')
+
+    next()
+  }
 
   /**
    * Returns a HTML form for registering a new user.
@@ -32,38 +31,45 @@ export class UserController {
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
    */
-    async registration (req, res) {
-      res.render('users/register')
-    }
+  async registration (req, res) {
+    res.render('users/register')
+  }
 
-    // Method for registration
+  // Method for registration
   /**
    * Registers a new user.
    *
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
    */
-    async createRegistration (req, res) {
-      // Check if there is already a user in the database with that username, before new user can be created.
+  async createRegistration (req, res) {
+    // Check if there is already a user in the database with that username, before new user can be created.
 
-      const username = req.body.username
-      const password = req.body.password
+    const username = req.body.username
+    const password = req.body.password
+    const password2 = req.body.password2
 
-      // Check if the username and password is in the request body.
-      if (!username || !password) {
-        req.session.flash = { type: 'danger', text: 'Please enter a valid username and password.' }
-        return res.redirect('./register')
-      } 
+    // Check if the passwords match, before the user can be registered.
+    if (password !== password2) {
+      req.session.flash = { type: 'danger', text: 'Passwords do not match.' }
+      return res.redirect('./register')
+    }
 
-      // Check if the username already exists against the stored usernames in the database.
-      const userInDatabase = await UserModel.findOne({username: username})
+    // Check if the username and password is in the request body.
+    if (!username || !password) {
+      req.session.flash = { type: 'danger', text: 'Please enter a valid username and password.' }
+      return res.redirect('./register')
+    }
 
-      if (userInDatabase) {
-        req.session.flash = { type: 'danger', text: 'Please enter a different username.'}
-        return res.redirect('./register')
-      }
+    // Check if the username already exists against the stored usernames in the database.
+    const userInDatabase = await UserModel.findOne({ username })
 
-      try {
+    if (userInDatabase) {
+      req.session.flash = { type: 'danger', text: 'Please enter a different username.' }
+      return res.redirect('./register')
+    }
+
+    try {
       // Store user in the database.
       await UserModel.create({
         username,
@@ -77,9 +83,9 @@ export class UserController {
       req.session.flash = { type: 'danger', text: error.message }
       res.redirect('./register')
     }
-    }
+  }
 
-      // Connect user to snippets that the user has created. Only the user (if logged in) will be authorized to update or delete their own snippets.
+  // Connect user to snippets that the user has created. Only the user (if logged in) will be authorized to update or delete their own snippets.
 
   /**
    * Returns a HTML form for logging in.
@@ -87,30 +93,31 @@ export class UserController {
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
    */
-      async login (req, res) {
-        res.render('users/login')
-      }
+  async login (req, res) {
+    res.render('users/login')
+  }
 
-      /**
+     /**
        * Login the user.
        * @param {object} req - Express request object.
        * @param {object} res - Express response object.
        */
-      async createLogin (req, res) {
-        const username = req.body.username
-        const password = req.body.password
-  
-        try { 
-          // Check if the user already exists against the stored usernames in the database.
-          const userInDatabase = await UserModel.authenticate(username, password)
-          req.session.regenerate(() => {
-            req.session.flash = { type: 'success', text: 'You are now logged in.' }
-            req.session.user = userInDatabase
-            res.redirect('/')
-          })
-          } catch (error) {
-            req.session.flash = { type: 'danger', text: error.message }
-            return res.redirect('./login')
-          }
-        }
+  async createLogin (req, res) {
+    const username = req.body.username
+    const password = req.body.password
+
+    try {
+      // Check if the user already exists against the stored usernames in the database.
+      const userInDatabase = await UserModel.authenticate(username, password)
+      // Session regeneration improves security (ex session fixation attacks and session hijacking).
+      req.session.regenerate(() => {
+        req.session.flash = { type: 'success', text: 'You are now logged in.' }
+        req.session.user = userInDatabase
+        res.redirect('/')
+      })
+    } catch (error) {
+      req.session.flash = { type: 'danger', text: error.message }
+      return res.redirect('./login')
+    }
+  }
 }

@@ -4,6 +4,9 @@
   "description": "In this assignment, you will create a web application to manage code [snippets](https://en.wikipedia.org/wiki/Snippet_(programming)). The web application will use the Node.js platform, Express as the application framework, and Mongoose as the object data modeling (ODM) library for MongoDB.",
   "main": "server.js",
   "type": "module",
+  "eslintConfig": {
+    "extends": "@lnu"
+  },
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon --inspect --env-file=.env src/server.js",
@@ -20,6 +23,7 @@
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-ejs-layouts": "^2.5.1",
+    "express-rate-limit": "^7.1.5",
     "express-session": "^1.18.0",
     "helmet": "^7.1.0",
     "http-errors": "^2.0.0",
