@@ -79,9 +79,11 @@ export class SnippetController {
   async createPost (req, res) {
     try {
       const { description } = req.body
+      const { user } = req.session.user
 
       await SnippetModel.create({
-        description
+        description,
+        user
       })
 
       req.session.flash = { type: 'success', text: 'The snippet was created successfully.' }

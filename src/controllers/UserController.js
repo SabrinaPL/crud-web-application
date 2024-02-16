@@ -5,6 +5,7 @@
  */
 
 // I want this controller to handle the logic for user registration and login.
+import { SnippetModel } from '../models/SnippetModel.js'
 import { UserModel } from '../models/UserModel.js'
 
 /**
@@ -134,10 +135,27 @@ export class UserController {
    * @param {Function} next - Express next middleware function.
    * @returns {*} - Redirects to 404 page if user is not authenticated.
    */
-  authenticate (req, res, next) {
+  static authenticateUser (req, res, next) {
+    console.log('Hello from authenticateUser')
     if (!req.session.user) {
       return res.redirect('errors/404.html')
     }
     next()
   }
+
+  /**
+   * Method for user authorization.
+   *
+   * @param {object} req - Express request object.
+   * @param {object} res - Express response object.
+   * @param {Function} next - Express next middleware function.
+   * @returns {*} - Redirects to 403 page if user is not authorized.
+   */
+  /* static authorizeUser (req, res, next) {
+    console.log('Hello from authorizeUser')
+    if (SnippetModel.user !== req.session.user) {
+      return res.redirect('errors/403.html')
+    }
+    next()
+  } */
 }
