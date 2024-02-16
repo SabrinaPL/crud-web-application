@@ -8,6 +8,7 @@ import { sessionOptions } from './config/sessionOptions.js'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { router } from './routes/router.js'
+import { rateLimit } from 'express-rate-limit'
 
 try {
   // Connect to MongoDB.
@@ -18,6 +19,17 @@ try {
 
   // Set various HTTP headers to help protect the application from well-known web vulnerabilities.
   app.use(helmet())
+
+  // Rate limiting middleware for Express apps (code from https://www.npmjs.com/package/express-rate-limit).
+  const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes.
+    limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+    standardHeaders: 'draft-7', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header.
+    legacyHeaders: false // Disable the `X-RateLimit-*` headers.
+  })
+
+  // Apply the rate limiting middleware to all requests.
+  app.use(limiter)
 
   // Get the directory name of this module's path.
   const directoryFullName = dirname(fileURLToPath(import.meta.url))

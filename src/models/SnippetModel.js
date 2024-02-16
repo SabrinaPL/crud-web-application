@@ -14,6 +14,12 @@ const schema = new mongoose.Schema({
     required: true,
     trim: true,
     minlength: 1
+  },
+  user: {
+    // Creates a reference to the User model, this means that only registered users can create snippets.
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   }
 })
 

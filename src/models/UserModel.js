@@ -41,10 +41,11 @@ userSchema.pre('save', async function () {
 
 // Method to authenticate a user (from the "access control" lecture).
 /**
- * 
- * @param {*} username 
- * @param {*} password 
- * @returns 
+ * Method to authenticate a user.
+ *
+ * @param {username} username of the user.
+ * @param {password} password of the user.
+ * @returns {Promise} The user.
  */
 userSchema.statics.authenticate = async function (username, password) {
   const user = await this.findOne({ username })

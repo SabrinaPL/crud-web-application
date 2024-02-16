@@ -51,7 +51,7 @@ export class SnippetController {
     try {
       const viewData = {
         snippets: (await SnippetModel.find())
-        .map(snippetDoc => snippetDoc.toObject())
+          .map(snippetDoc => snippetDoc.toObject())
       }
 
       res.render('snippets/index', { viewData })

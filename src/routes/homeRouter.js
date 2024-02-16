@@ -16,4 +16,3 @@ router.get('/', (req, res, next) => controller.index(req, res, next))
 
 // POST
 router.post('/', (req, res, next) => controller.indexPost(req, res, next))
-

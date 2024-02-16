@@ -41,6 +41,7 @@ export class UserController {
    *
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
+   * @returns {*} - Redirects to the login page if the user is successfully registered.
    */
   async createRegistration (req, res) {
     // Check if there is already a user in the database with that username, before new user can be created.
@@ -81,7 +82,7 @@ export class UserController {
       res.redirect('./login')
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
-      res.redirect('./register')
+      return res.redirect('./register')
     }
   }
 
@@ -97,12 +98,15 @@ export class UserController {
     res.render('users/login')
   }
 
-     /**
-       * Login the user.
-       * @param {object} req - Express request object.
-       * @param {object} res - Express response object.
-       */
-  async createLogin (req, res) {
+  /**
+   * Login the user.
+   *
+   * @param {object} req - Express request object.
+   * @param {object} res - Express response object.
+   * @param {Function} next - Express next middleware function.
+   * @returns {*} - Redirects to the home page if the user is logged in.
+   */
+  async createLogin (req, res, next) {
     const username = req.body.username
     const password = req.body.password
 
@@ -113,11 +117,27 @@ export class UserController {
       req.session.regenerate(() => {
         req.session.flash = { type: 'success', text: 'You are now logged in.' }
         req.session.user = userInDatabase
-        res.redirect('/')
+        return res.redirect('/')
       })
+      next()
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
       return res.redirect('./login')
     }
+  }
+
+  /**
+   * Method to check if user is authenticated.
+   *
+   * @param {object} req - Express request object.
+   * @param {object} res - Express response object.
+   * @param {Function} next - Express next middleware function.
+   * @returns {*} - Redirects to 404 page if user is not authenticated.
+   */
+  authenticate (req, res, next) {
+    if (!req.session.user) {
+      return res.redirect('errors/404.html')
+    }
+    next()
   }
 }
