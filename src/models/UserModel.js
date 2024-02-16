@@ -33,10 +33,13 @@ const userSchema = new mongoose.Schema({
 userSchema.add(BASE_SCHEMA)
 
 // Pre hook to hash and salt the password before saving it to the database. Added code to check if the password is modified, as recommended by Mats (handledning 15/2-2024).
-userSchema.pre('save', async function () {
-  if (this.isModified('password')) {
-    this.password = await bcryptjs.hash(this.password, 10)
+userSchema.pre('save', async function (next) {
+  const user = this
+
+  if (user.isModified('password')) {
+    user.password = await bcryptjs.hash(user.password, 10)
   }
+  next()
 })
 
 // Method to authenticate a user (from the "access control" lecture).

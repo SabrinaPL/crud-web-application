@@ -22,8 +22,6 @@ export class UserController {
    */
   index (req, res, next) {
     res.render('users/login')
-
-    next()
   }
 
   /**
@@ -87,8 +85,6 @@ export class UserController {
     }
   }
 
-  // Connect user to snippets that the user has created. Only the user (if logged in) will be authorized to update or delete their own snippets.
-
   /**
    * Returns a HTML form for logging in.
    *
@@ -117,10 +113,10 @@ export class UserController {
       // Session regeneration improves security (ex session fixation attacks and session hijacking).
       req.session.regenerate(() => {
         req.session.flash = { type: 'success', text: 'You are now logged in.' }
-        req.session.user = userInDatabase
+        req.session.user = userInDatabase._id
+        console.log(req.session.user)
         return res.redirect('/')
       })
-      next()
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
       return res.redirect('./login')
@@ -128,7 +124,7 @@ export class UserController {
   }
 
   /**
-   * Method to check if user is authenticated.
+   * Method for user authentication.
    *
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
@@ -136,11 +132,14 @@ export class UserController {
    * @returns {*} - Redirects to 404 page if user is not authenticated.
    */
   static authenticateUser (req, res, next) {
-    console.log('Hello from authenticateUser')
-    if (!req.session.user) {
-      return res.redirect('errors/404.html')
+    try {
+      if (!req.session.user) {
+        return res.redirect('error/404')
+      }
+      next()
+    } catch (error) {
+      next(error)
     }
-    next()
   }
 
   /**
@@ -151,11 +150,14 @@ export class UserController {
    * @param {Function} next - Express next middleware function.
    * @returns {*} - Redirects to 403 page if user is not authorized.
    */
-  /* static authorizeUser (req, res, next) {
-    console.log('Hello from authorizeUser')
-    if (SnippetModel.user !== req.session.user) {
-      return res.redirect('errors/403.html')
+  static authorizeUser (req, res, next) {
+    try {
+      if (req.session.user && req.session.user._id && req.params.id !== req.session.user._id.toString()) {
+        return res.redirect('error/403')
+      }
+      next()
+    } catch (error) {
+      next(error)
     }
-    next()
-  } */
+  }
 }

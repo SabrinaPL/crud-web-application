@@ -22,7 +22,7 @@ router.get('/', (req, res, next) => controller.index(req, res, next))
 // Code pattern as recommended by Mats.
 router.route('/create')
   .all(
-    [UserController.authenticateUser]//, UserController.authorizeUser]
+    UserController.authenticateUser
   )
   .get((req, res, next) => controller.create(req, res, next))
   .post((req, res, next) => controller.createPost(req, res, next))
@@ -30,7 +30,7 @@ router.route('/create')
 // Route for updating snippets should only be available for authenticated and authorized users.
 router.route('/:id/update')
   .all(
-    [UserController.authenticateUser]//, UserController.authorizeUser]
+    [UserController.authenticateUser, UserController.authorizeUser]
   )
   .get((req, res, next) => controller.update(req, res, next))
   .post((req, res, next) => controller.updatePost(req, res, next))
@@ -38,7 +38,7 @@ router.route('/:id/update')
 // Route for deleting snippets should only be available for authenticated and authorized users.
 router.route('/:id/delete')
   .all(
-    [UserController.authenticateUser]//, UserController.authorizeUser]
+    [UserController.authenticateUser, UserController.authorizeUser]
   )
   .get((req, res, next) => controller.delete(req, res, next))
   .post((req, res, next) => controller.deletePost(req, res, next))

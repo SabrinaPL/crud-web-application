@@ -79,7 +79,7 @@ export class SnippetController {
   async createPost (req, res) {
     try {
       const { description } = req.body
-      const { user } = req.session.user
+      const user = req.session.user
 
       await SnippetModel.create({
         description,
