@@ -19,6 +19,7 @@ router.param('id', (req, res, next, id) => controller.loadSnippetDocument(req, r
 router.get('/', (req, res, next) => controller.index(req, res, next))
 
 // Route for creating new snippets should only be available for authenticated users.
+// Code pattern as recommended by Mats.
 router.route('/create')
   .all(
     [UserController.authenticate, UserController.authorize
