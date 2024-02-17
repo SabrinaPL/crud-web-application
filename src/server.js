@@ -71,6 +71,8 @@ try {
 
     // Pass the base URL to the views.
     res.locals.baseURL = baseURL
+    // Pass the user to the views.
+    res.locals.user = req.session.user || null
 
     next()
   })

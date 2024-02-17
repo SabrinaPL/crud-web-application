@@ -113,7 +113,6 @@ export class UserController {
       req.session.regenerate(() => {
         req.session.flash = { type: 'success', text: 'You are now logged in.' }
         req.session.user = userInDatabase._id
-        console.log(req.session.user)
         return res.redirect('/')
       })
     } catch (error) {
@@ -129,8 +128,10 @@ export class UserController {
    * @param {object} res - Express response object.
    * @returns {*} - Redirects to the home page if the user is logged out.
    */
-  async logout (req, res) {
-    if (req.session.user) {
+  logout (req, res) {
+    if (!req.session.user) {
+      return res.render('error/404')
+    } else {
       req.session.destroy(() => {
         res.redirect('/')
       })
