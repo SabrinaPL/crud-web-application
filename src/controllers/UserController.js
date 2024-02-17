@@ -5,7 +5,6 @@
  */
 
 // I want this controller to handle the logic for user registration and login.
-import { SnippetModel } from '../models/SnippetModel.js'
 import { UserModel } from '../models/UserModel.js'
 
 /**
@@ -124,6 +123,21 @@ export class UserController {
   }
 
   /**
+   * Logout the user.
+   *
+   * @param {object} req - Express request object.
+   * @param {object} res - Express response object.
+   * @returns {*} - Redirects to the home page if the user is logged out.
+   */
+  async logout (req, res) {
+    if (req.session.user) {
+      req.session.destroy(() => {
+        res.redirect('/')
+      })
+    }
+  }
+
+  /**
    * Method for user authentication.
    *
    * @param {object} req - Express request object.
@@ -152,6 +166,7 @@ export class UserController {
    */
   static authorizeUser (req, res, next) {
     try {
+      // Logic needs to be added to check if the user is the owner of the snippet.
       if (req.session.user && req.session.user._id && req.params.id !== req.session.user._id.toString()) {
         return res.redirect('error/403')
       }

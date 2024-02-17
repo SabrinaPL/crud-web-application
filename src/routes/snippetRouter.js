@@ -16,7 +16,11 @@ const controller = new SnippetController()
 router.param('id', (req, res, next, id) => controller.loadSnippetDocument(req, res, next, id))
 
 // Map HTTP verbs and route paths to controller action methods.
-router.get('/', (req, res, next) => controller.index(req, res, next))
+router.get('/', (req, res, next) => {
+  controller.index(req, res, () => {
+    res.render('layouts/default', { user: req.session.user || null })
+  })
+})
 
 // Route for creating new snippets should only be available for authenticated users.
 // Code pattern as recommended by Mats.
@@ -24,7 +28,11 @@ router.route('/create')
   .all(
     UserController.authenticateUser
   )
-  .get((req, res, next) => controller.create(req, res, next))
+  .get((req, res, next) => {
+    controller.create(req, res, () => {
+      res.render('layouts/default', { user: req.session.user || null })
+    })
+  })
   .post((req, res, next) => controller.createPost(req, res, next))
 
 // Route for updating snippets should only be available for authenticated and authorized users.
@@ -32,7 +40,11 @@ router.route('/:id/update')
   .all(
     [UserController.authenticateUser, UserController.authorizeUser]
   )
-  .get((req, res, next) => controller.update(req, res, next))
+  .get((req, res, next) => {
+    controller.update(req, res, () => {
+      res.render('layouts/default', { user: req.session.user || null })
+    })
+  })
   .post((req, res, next) => controller.updatePost(req, res, next))
 
 // Route for deleting snippets should only be available for authenticated and authorized users.
@@ -40,5 +52,9 @@ router.route('/:id/delete')
   .all(
     [UserController.authenticateUser, UserController.authorizeUser]
   )
-  .get((req, res, next) => controller.delete(req, res, next))
+  .get((req, res, next) => {
+    controller.delete(req, res, () => {
+      res.render('layouts/default', { user: req.session.user || null })
+    })
+  })
   .post((req, res, next) => controller.deletePost(req, res, next))
