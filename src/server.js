@@ -59,6 +59,7 @@ try {
   if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', 1) // trust first proxy
   }
+  // Will handle the session cookie.
   app.use(session(sessionOptions))
 
   // Middleware to be executed before the routes.

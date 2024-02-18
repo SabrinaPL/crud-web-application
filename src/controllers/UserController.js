@@ -6,6 +6,7 @@
 
 // I want this controller to handle the logic for user registration and login.
 import { UserModel } from '../models/UserModel.js'
+import { SnippetModel } from '../models/SnippetModel.js'
 
 /**
  * Encapsulates a controller.
@@ -126,15 +127,21 @@ export class UserController {
    *
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
+   * @param {Function} next - Express next middleware function.
    * @returns {*} - Redirects to the home page if the user is logged out.
    */
-  logout (req, res) {
-    if (!req.session.user) {
-      return res.render('error/404')
-    } else {
-      req.session.destroy(() => {
-        res.redirect('/')
-      })
+  logout (req, res, next) {
+    try {
+      if (!req.session.user) {
+        return res.render('error/404')
+      } else {
+        req.session.destroy(() => {
+          res.redirect('/')
+        })
+      }
+      next()
+    } catch (error) {
+      next(error)
     }
   }
 
@@ -165,13 +172,18 @@ export class UserController {
    * @param {Function} next - Express next middleware function.
    * @returns {*} - Redirects to 403 page if user is not authorized.
    */
-  static authorizeUser (req, res, next) {
+  static async authorizeUser (req, res, next) {
     try {
-      // Logic needs to be added to check if the user is the owner of the snippet.
-      if (req.session.user && req.session.user._id && req.params.id !== req.session.user._id.toString()) {
+      // Fetch the snippet from the database.
+      const snippet = await SnippetModel.findById(req.params.id)
+
+      // Check if the user is authorized to update the snippet.
+      // Code suggested by copilot.
+      if (req.session.user && req.session.user._id && snippet.user.toString() !== req.session.user._id.toString()) {
+        next()
+      } else {
         return res.redirect('error/403')
       }
-      next()
     } catch (error) {
       next(error)
     }
