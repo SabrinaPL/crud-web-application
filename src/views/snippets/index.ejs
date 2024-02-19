@@ -14,10 +14,12 @@
                     </code>
                 </pre>
                 </div>
+                <% if (snippet && user && user._id === snippet.user.toString()) { %>
                 <div class="update-delete-text">
                     <a href="./snippets/<%= snippet.id %>/update">Update</a>
                     <a href="./snippets/<%= snippet.id %>/delete">Delete</a>
                 </div>
+                <% } %>
             </div>
 
             <% } %>
