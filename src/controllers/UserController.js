@@ -113,7 +113,8 @@ export class UserController {
       // Session regeneration improves security (ex session fixation attacks and session hijacking).
       req.session.regenerate(() => {
         req.session.flash = { type: 'success', text: 'You are now logged in.' }
-        req.session.user = userInDatabase._id
+        req.session.user = userInDatabase
+
         return res.redirect('/')
       })
     } catch (error) {
@@ -179,7 +180,7 @@ export class UserController {
 
       // Check if the user is authorized to update the snippet.
       // Code suggested by copilot.
-      if (req.session.user && req.session.user._id && snippet.user.toString() !== req.session.user._id.toString()) {
+      if (req.session.user && req.session.user._id && snippet.user.toString() === req.session.user._id.toString()) {
         next()
       } else {
         return res.redirect('error/403')

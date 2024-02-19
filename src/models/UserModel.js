@@ -56,8 +56,13 @@ userSchema.statics.authenticate = async function (username, password) {
   if (!user || !(await bcryptjs.compare(password, user.password))) {
     throw new Error('Invalid login attempt.')
   }
+
+  const userObject = {
+    username: user.username,
+    _id: user._id
+  }
   // If the user is found and the password is correct, return the user.
-  return user
+  return userObject
 }
 
 // Create a model using the schema.
