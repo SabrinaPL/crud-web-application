@@ -160,6 +160,8 @@ export class UserController {
       if (!req.session.user) {
         const error = createHTTPError(404)
         throw error
+      } else {
+        next()
       }
     } catch (error) {
       next(error)
@@ -185,7 +187,7 @@ export class UserController {
         next()
       } else {
         const error = createHTTPError(403)
-        next(error)
+        throw error
       }
     } catch (error) {
       next(error)
