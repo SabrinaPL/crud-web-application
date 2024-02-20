@@ -4,7 +4,6 @@
     <label for="snippet-code-text-box">
         My updated snippet:
     </label><br>
-    <textarea rows="5" cols="50" class="snippet-code-text-box" id="descriptionInput" name="description" value="<%= viewData?.id %> placeholder="Update snippet here" required autofocus />
-    <%= viewData?.description %></textarea><br>
+    <textarea rows="5" cols="50" class="snippet-code-text-box" id="descriptionInput" name="description" value="<%= viewData?.id %> placeholder="Update snippet here" required autofocus /><%= viewData?.description %></textarea><br>
         <button type="submit" class="crud-btn">Update</button>
 </form>

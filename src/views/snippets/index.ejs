@@ -1,6 +1,6 @@
 <h1>Snippets</h1>
 <p>
-    Here you can view snippets that have been created by our users
+    Here you can view snippets that have been created by our users (newest-oldest)
 </p>
 
 <div class="my-snippets-container">
@@ -8,11 +8,7 @@
         <% for (const snippet of viewData.snippets) { %>
             <div class="my-snippet">
                 <div class="code-snippet-container">
-                    <pre>
-                    <code>
-                    <%= snippet.description %>
-                    </code>
-                </pre>
+                <pre><code><%= snippet.description %></code></pre>
                 </div>
                 <% if (snippet && user && user._id === snippet.user.toString()) { %>
                 <div class="update-delete-text">
