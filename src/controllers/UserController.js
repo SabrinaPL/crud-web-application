@@ -7,6 +7,7 @@
 // I want this controller to handle the logic for user registration and login.
 import { UserModel } from '../models/UserModel.js'
 import { SnippetModel } from '../models/SnippetModel.js'
+import createHTTPError from 'http-errors'
 
 /**
  * Encapsulates a controller.
@@ -157,9 +158,9 @@ export class UserController {
   static authenticateUser (req, res, next) {
     try {
       if (!req.session.user) {
-        return res.redirect('error/404')
+        const error = createHTTPError(404)
+        throw error
       }
-      next()
     } catch (error) {
       next(error)
     }
@@ -183,7 +184,8 @@ export class UserController {
       if (req.session.user && req.session.user._id && snippet.user.toString() === req.session.user._id.toString()) {
         next()
       } else {
-        return res.redirect('error/403')
+        const error = createHTTPError(403)
+        next(error)
       }
     } catch (error) {
       next(error)

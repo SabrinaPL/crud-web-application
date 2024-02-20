@@ -17,23 +17,10 @@ router.use('/', homeRouter)
 router.use('/snippets', snippetRouter)
 router.use('/users', userRouter)
 
-// Catch 403 and 500 errors and forward to error handler.
-router.use('/:id/update', (req, res, next) => {
-  const statusCode = 403
-  const error = new Error(http.STATUS_CODES[statusCode])
-  error.status = statusCode
-})
-
-router.use('/:id/delete', (req, res, next) => {
-  const statusCode = 403
-  const error = new Error(http.STATUS_CODES[statusCode])
-  error.status = statusCode
-})
-
 // Catch 404 and forward to error handler.
-/* router.use('*', (req, res, next) => {
+router.use('*', (req, res, next) => {
   const statusCode = 404
   const error = new Error(http.STATUS_CODES[statusCode])
   error.status = statusCode
   next(error)
-}) */
+})
