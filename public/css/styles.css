@@ -20,7 +20,7 @@ body {
     text-align: right;
   }
 
-  .button {
+  .button, .filter-snippets-btn {
     display: inline-block;
     padding: 0.5rem 1rem;
     text-align: center;
@@ -31,6 +31,29 @@ body {
     background-color: #f0f0f0;
     color: #333;
     margin: 0.5rem;
+  }
+
+  .filter-snippets-btn:hover {
+    background-color: darkseagreen;
+  }
+
+  .password-ux-default {
+    visibility: hidden; 
+  }
+
+  .password-ux-red {
+    border-top: 0.5rem solid red;
+    width: 20%;
+  }
+
+  .password-ux-yellow {
+    border-top: 0.5rem solid yellow;
+    width: 20%;
+  }
+
+  .password-ux-green {
+    border-top: 0.5rem solid green;
+    width: 20%;
   }
 
   ul {

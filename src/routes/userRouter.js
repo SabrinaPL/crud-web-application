@@ -35,4 +35,9 @@ router.get('/login', (req, res, next) => {
 router.post('/login', (req, res, next) => { controller.createLogin(req, res, next) })
 
 // Route for logging out.
-router.get('/logout', (req, res, next) => controller.logout(req, res, next))
+router.route('/logout')
+  .all(
+    UserController.authenticateUser
+  )
+  .get((req, res, next) => controller.logout(req, res, next))
+  .post((req, res, next) => controller.logoutPost(req, res, next))
