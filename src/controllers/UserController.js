@@ -116,7 +116,7 @@ export class UserController {
         req.session.flash = { type: 'success', text: 'You are now logged in.' }
         req.session.user = userInDatabase
 
-        return res.redirect('/')
+        return res.redirect('./')
       })
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
@@ -138,7 +138,7 @@ export class UserController {
         return res.render('error/404')
       } else {
         req.session.destroy(() => {
-          res.redirect('/')
+          res.redirect('./')
         })
       }
       next()

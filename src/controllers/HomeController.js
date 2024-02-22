@@ -39,6 +39,3 @@ export class HomeController {
     res.render('home/index', { viewData })
   }
 }
-
-// Minnesanteckningar från föreläsningarna:
-/* Om användaren postar in något så är vi intresserade av vad som har postats och att skicka över den datan till vyn för att presentera den, vi vill däremot inte bearbeta datan i vyerna - i kontrollermetoderna förberer vi datan så långt det går då vi vill undvika att skriva mer logik än absolut nödvändigt i vyerna */
