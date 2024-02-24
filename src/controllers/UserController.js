@@ -109,15 +109,21 @@ export class UserController {
     const password = req.body.password
 
     try {
+      // Check if the user is already logged in to the session.
+      if (!req.session.user) {
       // Check if the user already exists against the stored usernames in the database.
-      const userInDatabase = await UserModel.authenticate(username, password)
-      // Session regeneration improves security (ex session fixation attacks and session hijacking).
-      req.session.regenerate(() => {
-        req.session.flash = { type: 'success', text: 'You are now logged in.' }
-        req.session.user = userInDatabase
+        const userInDatabase = await UserModel.authenticate(username, password)
+        // Session regeneration improves security (ex session fixation attacks and session hijacking).
+        req.session.regenerate(() => {
+          req.session.flash = { type: 'success', text: 'You are now logged in.' }
+          req.session.user = userInDatabase
 
-        return res.redirect('./')
-      })
+          return res.redirect('/')
+        })
+      } else {
+        req.session.flash = { type: 'danger', text: 'You are already logged in.' }
+        return res.redirect('/')
+      }
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
       return res.redirect('./login')
