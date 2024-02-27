@@ -5,7 +5,6 @@
  */
 
 import { SnippetModel } from '../models/SnippetModel.js'
-import { UserModel } from '../models/UserModel.js'
 
 /**
  * Encapsulates a controller.
@@ -51,6 +50,7 @@ export class SnippetController {
   async index (req, res, next) {
     try {
       const viewData = {
+        // populate method is used to get the username from the user collection, as suggested by chatGPT.
         snippets: (await SnippetModel.find().populate('user', 'username'))
           .map(snippetDoc => snippetDoc.toObject())
       }
