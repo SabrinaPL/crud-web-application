@@ -130,8 +130,3 @@ try {
   console.error(err)
   process.exitCode = 1
 }
-
-// Minnesanteckningar från föreläsningarna:
-/* Server.js jobbar med filerna som finns i routes, routes med det som finns i controllers, controllers använder sig av det som finns i views */
-
-/* Server.js purpose is to create an instance of an Express application, config it and start it as an Express server */

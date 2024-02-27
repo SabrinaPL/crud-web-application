@@ -8,7 +8,7 @@ import mongoose from 'mongoose'
 import { BASE_SCHEMA } from './baseSchema.js'
 
 // Create a schema.
-const schema = new mongoose.Schema({
+const snippetSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true,
@@ -23,7 +23,7 @@ const schema = new mongoose.Schema({
   }
 })
 
-schema.add(BASE_SCHEMA)
+snippetSchema.add(BASE_SCHEMA)
 
 // Create a model using the schema.
-export const SnippetModel = mongoose.model('Snippet', schema)
+export const SnippetModel = mongoose.model('Snippet', snippetSchema)

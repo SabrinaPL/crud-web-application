@@ -4,6 +4,8 @@
  * @author Mats Loock
  */
 
+import { format } from 'date-fns'
+
 /**
  * Encapsulates a controller.
  */
@@ -30,9 +32,10 @@ export class HomeController {
   indexPost (req, res, next) {
     // Data prepared to be sent to the view.
     const viewData = {
-      name: req.body.name
+      name: req.body.name,
       // Date formatting (day).
-      // dayName: format(new Date(), 'iiii')
+      dayName: format(new Date(), 'iiii'),
+      user: req.user
     }
 
     // Here we need to specify which view shall be rendered (and potential data to be included).

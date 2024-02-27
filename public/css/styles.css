@@ -56,6 +56,10 @@ body {
     width: 20%;
   }
 
+  .username {
+    font-size: 1.1rem;
+  }
+
   ul {
     list-style-type: none;
     padding: 2rem;
