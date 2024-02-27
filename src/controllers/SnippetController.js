@@ -52,7 +52,8 @@ export class SnippetController {
       const viewData = {
         // populate method is used to get the username from the user collection, as suggested by chatGPT.
         snippets: (await SnippetModel.find().populate('user', 'username'))
-          .map(snippetDoc => snippetDoc.toObject())
+          .map(snippetDoc => snippetDoc.toObject()),
+        user: req.session.user
       }
 
       res.render('snippets/index', { viewData })
